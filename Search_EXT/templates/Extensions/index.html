@@ -1,0 +1,59 @@
+{% extends 'partials/base.html' %}
+{% block content %}
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Department</th>
+        <th scope="col">Section</th>
+        <th scope="col">Extension</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for data in page.object_list %}
+      <tr>
+        <td>{{ data.Department }}</td>
+        <td>{{ data.Section }}</td>
+        <td>{{ data.Extension }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+<div class="container">
+  <div class="row my-5">
+    <div class="col-md-4 offset-md-3">
+          <p>Page: {{ page.number }}/{{ page.paginator.num_pages}}</p>
+
+      <nav aria-label="Page navigation example">
+  <ul class="pagination">
+
+    <li class="page-item">
+        {% if page.has_previous %}
+        <a class="page-link" href="{% url 'index' %}?page={{ page.previous_page_number }}">Previous</a></li>
+        {% endif %}
+
+    {% for num_page in page.paginator.page_range %}
+    {% if page.number == num_page %}
+
+    <li class="page-item"><a class="page-link" href="{% url 'index' %}?page={{ num_page}}">{{ num_page }}</a></li>
+<!--    <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--    <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+
+    {% else %}
+          <li class="page-item"><a class="page-link" href="{% url 'index' %}?page={{ num_page}}">{{ num_page }}</a></li>
+
+    {% endif %}
+    {% endfor %}
+
+    <li class="page-item">
+        {% if page.has_next %}
+        <a class="page-link" href="{% url 'index' %}?page={{ page.next_page_number }}">Next</a></li>
+        {% endif %}
+
+  </ul>
+</nav>
+    </div>
+  </div>
+</div>
+
+{% endblock  %}
